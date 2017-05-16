@@ -1,0 +1,2 @@
+# statsmcfly.js
+browser client
