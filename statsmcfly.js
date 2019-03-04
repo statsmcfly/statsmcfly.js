@@ -2,11 +2,13 @@
 var statsmcfly = function(){
 	this.apikey = '';
 	this.apiurl = 'https://statsmcfly.com';
+	this.project = '';
 	return this;
 };
 
 statsmcfly.prototype.settings = function( options ){
 	this.apikey = options.apikey;
+	this.project = options.project || '';
 };
 
 statsmcfly.prototype.track = function(data, callback){
@@ -16,6 +18,10 @@ statsmcfly.prototype.track = function(data, callback){
 statsmcfly.prototype.request = function( method, payload, callback){
 	var self = this;
 	var url = self.apiurl + '/api';
+
+	if( self.project !== '' ){
+		payload.project = self.project;
+	}
 
 	var timestamp = Math.round(+new Date / 1000);
 	var signature = SHA1(self.apikey + ' ' + payload + ' ' + timestamp);
